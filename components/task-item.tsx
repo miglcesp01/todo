@@ -3,14 +3,9 @@
 import type { Task } from "@/components/todo-app"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { format } from "date-fns"
-import { Save, Trash2, X } from "lucide-react"
+import { Trash2 } from "lucide-react"
 import { useState } from "react"
-import { toast } from "sonner"
 
 interface TaskItemProps {
   task: Task
