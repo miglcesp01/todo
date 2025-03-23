@@ -5,14 +5,11 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Trash2 } from "lucide-react"
-import { useState } from "react"
 
 interface TaskItemProps {
   task: Task
   onDelete: (id: string) => void
   onToggleComplete: (id: string) => void
-  onStartEdit: (id: string) => void
-  onSaveEdit: (id: string, newText: string, newDueDate?: Date, edited?: boolean) => void
 }
 
 const shakeAnimation = `
@@ -31,8 +28,7 @@ const shakeAnimation = `
   }
 `
 
-export default function TaskItem({ task, onDelete, onToggleComplete, onStartEdit, onSaveEdit }: TaskItemProps) {
-  const [editText, setEditText] = useState(task.text)
+export default function TaskItem({ task, onDelete, onToggleComplete }: TaskItemProps) {
   const categoryColors = {
     work: "bg-rose-500",
     personal: "bg-emerald-500",

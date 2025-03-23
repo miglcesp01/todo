@@ -150,17 +150,6 @@ export default function TodoApp() {
     setTasks(tasks.map((task) => (task.id === id ? { ...task, completed: !task.completed } : task)))
   }
 
-  const startEditTask = (id: string) => {
-    setTasks(tasks.map((task) => (task.id === id ? { ...task, isEditing: true } : { ...task, isEditing: false })))
-  }
-
-  const saveEditedTask = (id: string, newText: string, newDueDate?: Date, edited: boolean = true) => {
-    if (newText.trim()) {
-      setTasks(tasks.map((task) => task.id === id ? { ...task, text: newText.trim(), dueDate: newDueDate, isEditing: false } : task))
-      if (edited) toast("Task updated");
-    }
-  }
-
   const filteredTasks = tasks.filter((task) => activeCategory === "all" ? true : task.category === activeCategory)
 
   return (
@@ -204,8 +193,6 @@ export default function TodoApp() {
             tasks={filteredTasks}
             onDelete={confirmDeleteTask}
             onToggleComplete={toggleTaskCompletion}
-            onStartEdit={startEditTask}
-            onSaveEdit={saveEditedTask}
           />
         </CardContent>
       </Card>
