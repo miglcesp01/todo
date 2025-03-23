@@ -21,13 +21,12 @@ const taskFormSchema = z.object({
   category: z
     .string()
     .refine((val) => val !== "all", { message: "Please select a category" }),
-  dueDate: z.date().optional()
 })
 
 type TaskFormValues = z.infer<typeof taskFormSchema>
 
 interface TaskFormProps {
-  onAddTask: (text: string, dueDate?: Date) => void
+  onAddTask: (text: string) => void
   activeCategory: Category
   setActiveCategory: (category: Category) => void
 }
@@ -39,7 +38,6 @@ export default function TaskForm({ onAddTask, activeCategory, setActiveCategory 
     defaultValues: {
       taskText: "",
       category: activeCategory,
-      dueDate: undefined,
     },
   })
 
@@ -56,11 +54,10 @@ export default function TaskForm({ onAddTask, activeCategory, setActiveCategory 
       form.setError("category", { message: "Please select a category" })
       return
     }
-    onAddTask(data.taskText, data.dueDate)
+    onAddTask(data.taskText)
     form.reset({
       taskText: "",
       category: activeCategory,
-      dueDate: undefined
     })
   }
 

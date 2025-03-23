@@ -16,7 +16,6 @@ export type Task = {
   completed: boolean
   category: string
   isEditing?: boolean
-  dueDate?: Date
 }
 
 export type Category = "all" | "work" | "personal" | "shopping"
@@ -65,7 +64,7 @@ export default function TodoApp() {
     }
   }, [isDarkMode])
 
-  const addTask = (text: string, dueDate?: Date) => {
+  const addTask = (text: string) => {
     const task: Task = {
       id: Date.now().toString(),
       text,
