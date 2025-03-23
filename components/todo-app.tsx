@@ -30,10 +30,8 @@ export default function TodoApp() {
   const [taskToDelete, setTaskToDelete] = useState<string | null>(null)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   
-  // Use a ref for lastDeletedTask to ensure it's always accessible in the toast action
   const lastDeletedTaskRef = useRef<{task: Task, index: number} | null>(null)
 
-  // Load tasks from localStorage on initial render
   useEffect(() => {
     try {
       const savedTasks = localStorage.getItem("tasks")
@@ -42,18 +40,15 @@ export default function TodoApp() {
       }
     } catch (error) {
       console.error("Error loading tasks from localStorage:", error)
-      // Fallback to empty array if there's an error
       setTasks([])
     }
 
-    // Check user's preferred color scheme
     if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
       setIsDarkMode(true)
       document.documentElement.classList.add("dark")
     }
   }, [])
 
-  // Save tasks to localStorage whenever they change
   useEffect(() => {
     try {
       localStorage.setItem("tasks", JSON.stringify(tasks))
@@ -62,7 +57,6 @@ export default function TodoApp() {
     }
   }, [tasks])
 
-  // Toggle dark mode
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add("dark")
@@ -76,8 +70,7 @@ export default function TodoApp() {
       id: Date.now().toString(),
       text,
       completed: false,
-      category: activeCategory === "all" ? "personal" : activeCategory, // Default to "personal" if "all" is selected
-      dueDate
+      category: activeCategory === "all" ? "personal" : activeCategory,
     }
 
     setTasks([...tasks, task])
@@ -91,24 +84,20 @@ export default function TodoApp() {
 
   const deleteTask = () => {
     if (taskToDelete) {
-      // Find the task we're about to delete
       const taskIndex = tasks.findIndex(task => task.id === taskToDelete)
       
       if (taskIndex !== -1) {
         const taskToRemove = tasks[taskIndex]
         
-        // Save the deleted task and its position for potential restoration
         lastDeletedTaskRef.current = {
-          task: { ...taskToRemove }, // Create a deep copy to avoid reference issues
+          task: { ...taskToRemove },
           index: taskIndex
         }
         
-        // Update tasks list
         setTasks(tasks.filter((task) => task.id !== taskToDelete))
         
-        // Show toast with undo button
         toast("Task deleted", {
-          duration: 5000, // Give users 5 seconds to undo
+          duration: 5000,
           action: {
             label: "Undo",
             onClick: undoDelete,
@@ -125,10 +114,8 @@ export default function TodoApp() {
     if (lastDeletedTaskRef.current) {
       const { task, index } = lastDeletedTaskRef.current
       
-      // Insert the task back at its original position if possible
       setTasks(prevTasks => {
         const newTasks = [...prevTasks]
-        // Make sure index is still valid (might not be if list has shrunk)
         const insertIndex = Math.min(index, newTasks.length)
         newTasks.splice(insertIndex, 0, task)
         return newTasks
@@ -136,7 +123,6 @@ export default function TodoApp() {
       
       toast(`"${task.text}" restored`)
       
-      // Clear the saved task
       lastDeletedTaskRef.current = null
     }
   }
@@ -167,7 +153,6 @@ export default function TodoApp() {
           </Button>
         </CardHeader>
         <CardContent>
-          {/* Categories tabs are moved up for better visibility */}
           <Tabs
             defaultValue="all"
             value={activeCategory}
@@ -183,12 +168,10 @@ export default function TodoApp() {
             </TabsList>
           </Tabs>
 
-          {/* Keep TaskForm with original props structure */}
           <div className="mb-6">
             <TaskForm onAddTask={addTask} activeCategory={activeCategory} setActiveCategory={setActiveCategory} />
           </div>
           
-          {/* Task list display */}
           <TaskList
             tasks={filteredTasks}
             onDelete={confirmDeleteTask}
