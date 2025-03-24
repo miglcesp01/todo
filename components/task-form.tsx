@@ -43,10 +43,8 @@ export default function TaskForm({ onAddTask, activeCategory, setActiveCategory 
 
   useEffect(() => {
     form.setValue("category", activeCategory)
-    if (activeCategory !== "all") {
-      form.clearErrors("category")
-      form.clearErrors("taskText")
-    }
+    form.clearErrors("category")
+    form.clearErrors("taskText")
   }, [activeCategory, form])
 
   function onSubmit(data: TaskFormValues) {
