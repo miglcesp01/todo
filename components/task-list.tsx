@@ -5,13 +5,18 @@ interface TaskListProps {
   tasks: Task[]
   onDelete: (id: string) => void
   onToggleComplete: (id: string) => void
+  activeCategory: string
 }
 
-export default function TaskList({ tasks, onDelete, onToggleComplete }: TaskListProps) {
+export default function TaskList({ tasks, onDelete, onToggleComplete, activeCategory }: TaskListProps) {
   if (tasks.length === 0) {
     return (
       <div className="text-center py-8 text-muted-foreground">
-        <p>No tasks found. Add a task to get started!</p>
+        {activeCategory == "all"
+          ? <p>No tasks found. Add a task to get started!</p>
+          : <p>No {activeCategory} tasks were found. Add a task to get started!</p>
+        }
+        
       </div>
     )
   }

@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { X } from "lucide-react"
-import type { Task } from "./todo-app"
+import type { Task } from "@/components/todo-app"
 
 interface DeleteConfirmationDialogProps {
   isOpen: boolean
@@ -28,7 +28,6 @@ export default function DeleteConfirmationDialog({
   taskId,
   tasks,
 }: DeleteConfirmationDialogProps) {
-  // Find the task to be deleted
   const taskToDelete = tasks.find((task) => task.id === taskId)
 
   return (

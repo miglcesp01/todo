@@ -8,10 +8,9 @@ import { Plus } from "lucide-react"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import type { Category } from "./todo-app"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import type { Category } from "@/components/todo-app"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-// Define form validation schema
 const taskFormSchema = z.object({
   taskText: z
     .string()
@@ -32,7 +31,6 @@ interface TaskFormProps {
 }
 
 export default function TaskForm({ onAddTask, activeCategory, setActiveCategory }: TaskFormProps) {
-  // Initialize form with react-hook-form
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
@@ -43,12 +41,14 @@ export default function TaskForm({ onAddTask, activeCategory, setActiveCategory 
 
   const categories = ["personal", "work", "shopping", "all"]
 
-  // Update form default values when activeCategory changes
   useEffect(() => {
     form.setValue("category", activeCategory)
+    if (activeCategory !== "all") {
+      form.clearErrors("category")
+      form.clearErrors("taskText")
+    }
   }, [activeCategory, form])
 
-  // Handle form submission
   function onSubmit(data: TaskFormValues) {
     if (activeCategory === "all") {
       form.setError("category", { message: "Please select a category" })
@@ -96,7 +96,7 @@ export default function TaskForm({ onAddTask, activeCategory, setActiveCategory 
                     }
                   }}
                 >
-                  <SelectTrigger className="w-[130px] max-md:w-full capitalize">
+                  <SelectTrigger className="w-[150px] max-md:w-full capitalize">
                     <SelectValue placeholder="Category" />
                   </SelectTrigger>
                   <SelectContent>

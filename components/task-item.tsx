@@ -12,22 +12,6 @@ interface TaskItemProps {
   onToggleComplete: (id: string) => void
 }
 
-const shakeAnimation = `
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    75% { transform: translateX(8px); }
-  }
-
-  .shake {
-    animation: shake 0.3s ease-in-out;
-  }
-
-  .border-red-500 {
-    border-color: rgb(239 68 68);
-  }
-`
-
 export default function TaskItem({ task, onDelete, onToggleComplete }: TaskItemProps) {
   const categoryColors = {
     work: "bg-rose-500",
@@ -39,7 +23,6 @@ export default function TaskItem({ task, onDelete, onToggleComplete }: TaskItemP
 
   return (
     <>
-      <style>{shakeAnimation}</style>
       <li className={`flex items-center justify-between p-3 rounded-md border bg-card ${ task.isEditing ? " max-md:flex-col" : ""}`}>
       <div className="flex items-center gap-3 flex-1">
         <Checkbox

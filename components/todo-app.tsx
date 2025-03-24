@@ -8,7 +8,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Moon, Sun } from "lucide-react"
 import { useEffect, useState, useRef } from "react"
 import { toast } from "sonner"
-import TaskForm from "./task-form"
+import TaskForm from "@/components/task-form"
 
 export type Task = {
   id: string
@@ -158,9 +158,9 @@ export default function TodoApp() {
             onValueChange={(value) => setActiveCategory(value as Category)}
             className="mb-6"
           >
-            <TabsList className="grid grid-cols-1 md:grid-cols-4 w-full h-full">
+            <TabsList className="grid grid-cols-1 md:grid-cols-4 w-full h-full gap-1">
               {categories.map((category) => (
-                <TabsTrigger key={category} value={category} className="mx-1 capitalize cursor-pointer hover:bg-gray-200 dark:hover:bg-zinc-300 dark:hover:text-zinc-800">
+                <TabsTrigger key={category} value={category} className="capitalize cursor-pointer hover:bg-[#e5e5e5] dark:hover:bg-[#333333] transition-colors">
                   {category}
                 </TabsTrigger>
               ))}
@@ -175,6 +175,7 @@ export default function TodoApp() {
             tasks={filteredTasks}
             onDelete={confirmDeleteTask}
             onToggleComplete={toggleTaskCompletion}
+            activeCategory={activeCategory}
           />
         </CardContent>
       </Card>

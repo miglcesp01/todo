@@ -1,10 +1,4 @@
-import type { Metadata } from "next"
 import TodoApp from "@/components/todo-app"
-
-export const metadata: Metadata = {
-  title: "Todo List Manager",
-  description: "Manage your tasks with categories and dark mode support",
-}
 
 export default function Home() {
   return (
